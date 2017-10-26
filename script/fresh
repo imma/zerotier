@@ -4,11 +4,15 @@ function main {
   local shome="$(cd -P -- "${BASH_SOURCE%/*}/.." && pwd -P)"
   source "$shome/script/profile"
 
-  if [[ "$($shome/script/version | jq -r '.zerotier')" != "$ZEROTIER_VERSION" ]]; then
-    return 1
+  if [[ "$($shome/script/version | jq -r '.zerotier')" == "$ZEROTIER_VERSION" ]]; then
+    return 0
   fi
 
-  return 0
+  if ! sysctl 2>/dev/null; then
+    return 0
+  fi
+
+  return 1
 }
 
 main "$@"
