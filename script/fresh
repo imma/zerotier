@@ -8,9 +8,16 @@ function main {
     return 0
   fi
 
-  if ! sysctl 2>/dev/null; then
-    return 0
-  fi
+  case "${DISTRIB_ID}" in
+    Darwin)
+      true
+      ;;
+    *)
+      if ! sysctl 2>/dev/null; then
+        return 0
+      fi
+      ;;
+  esac
 
   return 1
 }
