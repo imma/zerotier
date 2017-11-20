@@ -2,7 +2,7 @@
 
 function _zerotier_profile {
   local shome="${_zerotier_home:="$(cd -P -- "$(dirname -- "$BASH_SOURCE")/.." && pwd -P)"}"
-  PATH="$shome/bin:$shome/exec:$PATH"
+  PATH="$shome/bin:$shome/exec:$PATH:/usr/local/bin"
 }
 
 _zerotier_profile
