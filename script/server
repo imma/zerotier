@@ -10,7 +10,7 @@ function main {
 
   case "${1:-}" in
     default)
-      exec sleep 15
+      exec sudo /var/lib/zerotier-one/zerotier-one "$@"
       ;;
     *)
       echo "ERROR: unknown server command: ${1:-/not-supplied/}" 1>&2
