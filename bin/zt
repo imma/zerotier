@@ -5,7 +5,7 @@ function main {
   source "$shome/script/profile"
   source normalize  
 
-  exec zerotier-cli "$@"
+  exec sudo "$(which zerotier-cli)" "$@"
 }
 
 source sub "$BASH_SOURCE" "$@"
