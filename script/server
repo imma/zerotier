@@ -10,6 +10,7 @@ function main {
 
   case "${1:-}" in
     default)
+      cd /var/lib/zerotier-one
       exec sudo /var/lib/zerotier-one/zerotier-one "$@"
       ;;
     *)
