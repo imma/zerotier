@@ -3,6 +3,17 @@
 function _zerotier_profile {
   local shome="${_zerotier_home:="$(cd -P -- "$(dirname -- "$BASH_SOURCE")/.." && pwd -P)"}"
   PATH="$shome/bin:$shome/exec:$PATH:/usr/local/bin"
+
+  case "${DISTRIB_ID}" in
+    Darwin)
+      ZT_PATH='/Library/Application Support/ZeroTier/One'
+      ;;
+    *)
+      ZT_PATH='/var/lib/zerotier-one'
+      ;;
+  esac
+
+  export ZT_PATH
 }
 
 _zerotier_profile
