@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+
+function main {
+  local shome="$(cd -P -- "${BASH_SOURCE%/*}/.." && pwd -P)"
+  source "$shome/script/profile"
+  source normalize  
+
+  local nm_moon="$1"; shift
+  local endpoint="$1"; shift
+
+  mkdir -p "$nm_moon.moon"
+  pushd "$nm_moon.moon"
+  zerotier-idtool generate "$nm_moon.key" "$nm_moon.pub"
+  zerotier-idtool initmoon "$nm_moon.key" \
+    | jq --arg endpoint "$endpoint" '.roots[0].stableEndpoints |= [$endpoint]'  > "$nm_moon.json"
+  popd
+}
+
+source sub "$BASH_SOURCE" "$@"
