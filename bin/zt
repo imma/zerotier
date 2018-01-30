@@ -5,7 +5,14 @@ function main {
   source "$shome/script/profile"
   source normalize  
 
-  exec sudo "$(which zerotier-cli)" "$@"
+  case "${1:-}" in
+    /*)
+      http --session-read-only zt http://localhost:9993"$@"
+      ;;
+    *)
+      exec sudo "$(which zerotier-cli)" "$@"
+      ;;
+  esac
 }
 
 source sub "$BASH_SOURCE" "$@"

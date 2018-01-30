@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+
+function main {
+  local shome="$(cd -P -- "${BASH_SOURCE%/*}/.." && pwd -P)"
+  source "$shome/script/profile"
+  source normalize  
+
+  local nm_host='localhost'
+  local port='9993'
+
+  local pth_session="${BOARD_PATH}/.httpie/sessions/${nm_host}_${port}/zt.json"
+
+  touch "$pth_session"
+  chmod 600 "$pth_session"
+  sudo cat "${ZT_PATH}/authtoken.secret" | jq -R '{headers: { "X-ZT1-Auth": . }}' > "$pth_session"
+}
+
+source sub "$BASH_SOURCE" "$@"
