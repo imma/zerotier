@@ -10,6 +10,7 @@ function main {
 
   local pth_session="${BOARD_PATH}/.httpie/sessions/${nm_host}_${port}/zt.json"
 
+  mkdir -p "$(dirname "$pth_session")"
   touch "$pth_session"
   chmod 600 "$pth_session"
   sudo cat "${ZT_PATH}/authtoken.secret" | jq -R '{headers: { "X-ZT1-Auth": . }}' > "$pth_session"
