@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+function main {
+  local shome="$(cd -P -- "${BASH_SOURCE%/*}/.." && pwd -P)"
+  source "$shome/script/profile"
+  source normalize  
+
+  jq -n --arg prefix "$(zt ipv6 "$@")" '{ipv6: true, "fixed-cidr-v6": $prefix}'
+}
+
+source sub "$BASH_SOURCE" "$@"
