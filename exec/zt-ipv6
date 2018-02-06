@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+
+function main {
+  local shome="$(cd -P -- "${BASH_SOURCE%/*}/.." && pwd -P)"
+  source "$shome/script/profile"
+  source normalize  
+
+  if [[ ! -d /var/lib/zerotier ]]; then
+    case "$(uname -s)" in
+      Darwin)
+        sudo ln -nfs /Library/Application\ Support/ZeroTier/One /var/lib/zerotier
+        ;;
+      *)
+        return 1
+        ;;
+    esac
+  fi
+
+  local nm_network="$1"; shift
+  echo "$(zt listnetworks | grep "$nm_network" | awk '{print $9}' | cut -d, -f1 | cut -d/ -f1 | cut -b1-12)$(cut -c 1-2 /var/lib/zerotier/identity.public):$(cut -c 3-6 /var/lib/zerotier/identity.public):$(cut -c 7-10 /var/lib/zerotier/identity.public)::/80"
+}
+
+source sub "$BASH_SOURCE" "$@"
